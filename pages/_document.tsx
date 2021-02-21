@@ -14,7 +14,13 @@ class MyDocument extends Document {
       });
 
     const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    return {
+      ...initialProps,
+      styles: [
+        ...React.Children.toArray(initialProps.styles),
+        sheets.getStyleElement(),
+      ],
+    };
   }
 
   render() {
