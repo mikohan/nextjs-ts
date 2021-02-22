@@ -12,6 +12,35 @@ interface Props {
 
 export default function Hero({ stream }: Props) {
   const styles = useStyles();
+  const { user } = useAuth();
+  const showEdit = user && user._id === stream.author._id;
+
+  return (
+    <Paper className={styles.mainFeaturedPost}>
+      <div className={styles.overlay} />
+      <Grid container>
+        <Grid item md={6}>
+          <div className={styles.mainFeaturedPostContent}>
+            <Typography
+              component="h1"
+              variant="h3"
+              color="inherit"
+              gutterBottom
+            >
+              {stream.title}
+            </Typography>
+            <Typography variant="h5" color="inherit" paragraph></Typography>
+            <Box pb={1} />
+            <Link href={`/edit/${stream._id}`}>
+              <Button variant="outlined" color="inherit">
+                Edit Stream
+              </Button>
+            </Link>
+          </div>
+        </Grid>
+      </Grid>
+    </Paper>
+  );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
