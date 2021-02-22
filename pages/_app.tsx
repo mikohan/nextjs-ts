@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import App from 'next/app';
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -7,6 +6,7 @@ import { ApolloProvider } from '@apollo/client';
 
 import { useApollo } from 'lib/apollo';
 import { themeDark, themeLight } from 'lib/theme';
+import { AuthProvider } from 'lib/useAuth';
 
 const MyApp = ({ Component, pageProps }) => {
   const apolloClinet = useApollo(pageProps.initialApolloState);
@@ -26,7 +26,9 @@ const MyApp = ({ Component, pageProps }) => {
     <ApolloProvider client={apolloClinet}>
       <ThemeProvider theme={darkState ? themeDark : themeLight}>
         <CssBaseline />
-        <Component {...pageProps} />
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
       </ThemeProvider>
     </ApolloProvider>
   );
