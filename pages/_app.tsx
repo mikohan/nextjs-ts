@@ -7,6 +7,7 @@ import { ApolloProvider } from '@apollo/client';
 import { useApollo } from 'lib/apollo';
 import { themeDark, themeLight } from 'lib/theme';
 import { AuthProvider } from 'lib/useAuth';
+import Header from 'components/Header';
 
 const MyApp = ({ Component, pageProps }) => {
   const apolloClinet = useApollo(pageProps.initialApolloState);
@@ -27,6 +28,7 @@ const MyApp = ({ Component, pageProps }) => {
       <ThemeProvider theme={darkState ? themeDark : themeLight}>
         <CssBaseline />
         <AuthProvider>
+          <Header darkState={darkState} handleThemeChange={handleThemeChange} />
           <Component {...pageProps} />
         </AuthProvider>
       </ThemeProvider>
