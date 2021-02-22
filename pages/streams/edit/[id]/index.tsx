@@ -16,6 +16,7 @@ import {
 export default function EditStream({ id }) {
   const router = useRouter();
   const [editStream] = useEditStreamMutation();
+  const [deleteStream] = useDeleteStreamMutation();
   const [state, setState] = useState({
     _id: '',
     title: '',
@@ -37,6 +38,35 @@ export default function EditStream({ id }) {
   useEffect(() => {
     fetchStream();
   }, []);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await editStream({
+        variables: { input: { id: _id, title, description, url } },
+      });
+      if (data.editStream._id) {
+        router.push('/stream');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  const onDelete = async (event) => {
+    event.preventDefalt();
+
+    try {
+      const { data } = await deleteStream({
+        variables: { id },
+      });
+      if (data.deleteStream) {
+        router.push('/streams');
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
 }
 
 EditStream.getInitialProps = ({ query: { id } }) => {
