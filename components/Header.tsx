@@ -38,15 +38,18 @@ export default function Header({ darkState, handleThemeChange }) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6">
-            <div className={classes.title}>
+          <div className={classes.title}>
+            <Typography variant="h6">
               <Link href="/">
                 <LinkText href="" color="inherit">
                   Stream.me
                 </LinkText>
               </Link>
-            </div>
-          </Typography>
+            </Typography>
+            <Typography variant="h6">
+              {user ? 'Logged' : 'not logged'}
+            </Typography>
+          </div>
           <Switch checked={darkState} onChange={handleThemeChange} />
           {links}
         </Toolbar>
