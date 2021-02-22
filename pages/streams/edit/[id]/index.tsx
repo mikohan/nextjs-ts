@@ -67,6 +67,49 @@ export default function EditStream({ id }) {
       console.error(e);
     }
   };
+  return (
+    <Container maxWidth="sm">
+      <Box my={4}>
+        <Typography variant="h4">Edit Stream</Typography>
+        <form>
+          <Box pb={2.5} />
+          <TextField
+            autoFocus
+            label="Title"
+            value={title}
+            onChange={(e) => setState({ ...state, title: e.target.value })}
+            required
+          />
+          <Box pb={2.5} />
+          <TextField
+            autoFocus
+            label="Description"
+            value={description}
+            onChange={(e) =>
+              setState({ ...state, description: e.target.value })
+            }
+            required
+          />
+          <Box pb={2.5} />
+          <TextField
+            autoFocus
+            label="URL"
+            value={url}
+            onChange={(e) => setState({ ...state, url: e.target.value })}
+            required
+          />
+          <Box pb={2.5} />
+          <Button type="submit" variant="contained" color="primary">
+            Save
+          </Button>
+          <Box pb={2.5} />
+          <Button onClick={onDelete} variant="contained" color="secondary">
+            Delete
+          </Button>
+        </form>
+      </Box>
+    </Container>
+  );
 }
 
 EditStream.getInitialProps = ({ query: { id } }) => {
