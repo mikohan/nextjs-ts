@@ -40,6 +40,13 @@ export default function Posts(props: Props) {
                     </Typography>
                   </CardContent>
                 </div>
+                <Hidden xsDown>
+                  <CardMedia
+                    className={styles.cardMedia}
+                    image="https://source.unsplash.com/random"
+                    title="Image title"
+                  ></CardMedia>
+                </Hidden>
               </Card>
             </CardActionArea>
           </Link>
