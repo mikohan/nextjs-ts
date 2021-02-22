@@ -13,7 +13,7 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
   const { error, signIn } = useAuth();
 
-  const onSubmit = async () => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     signIn(email, password);
   };
@@ -28,9 +28,21 @@ export default function SignIn() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="form-control"
-          label="email"
+          label="Email"
           required
         />
+        <Box pb={2.5} />
+        <TextField
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="form-control"
+          label="Password"
+          required
+        />
+        <Box pb={2.5} />
+        <Button variant="contained" color="primary" size="large" type="submit">
+          Sign In
+        </Button>
       </form>
     </Container>
   );
