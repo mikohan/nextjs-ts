@@ -46,4 +46,33 @@ function useProvideAuth() {
       setError(e.message);
     }
   };
+  const signUp = async (email, password) => {
+    try {
+      const { data } = await signUpMutation({ variables: { email, password } });
+      if (data.register.token && data.register.user) {
+        localStorage.setItem('token', data.register.token);
+        client.resetStore().then(() => {
+          router.push('/');
+        });
+      } else {
+        setError('Invalid Login');
+      }
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
+  const signOut = () => {
+    localStorage.removeItem('token');
+    client.resetStore().then(() => {
+      router.push('/');
+    });
+  };
+  return {
+    user,
+    error,
+    signIn,
+    signUp,
+    signOut,
+  };
 }
