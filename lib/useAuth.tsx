@@ -16,6 +16,17 @@ type AuthProps = {
 
 const AuthContext = createContext<Partial<AuthProps>>({});
 
+// You can wrap your _app.tsx with this provider
+export function AuthProvider({ children }) {
+  const auth = useProvideAuth();
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+}
+
+// Custom react hook to access the context
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
+
 function useProvideAuth() {
   const client = useApolloClient();
   const router = useRouter();
