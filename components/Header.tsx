@@ -13,11 +13,11 @@ import {
 import Link from 'next/link';
 import { useAuth } from 'lib/useAuth';
 
-export default function Header({ darckState, handleThemeChange }) {
+export default function Header({ darkState, handleThemeChange }) {
   const classes = useStyles();
   const { user } = useAuth();
 
-  const link = [
+  const links = [
     !user && { label: 'Sign Up', href: '/auth/signup' },
     !user && { label: 'Sign In', href: '/auth/signin' },
     user && { label: 'Create', href: '/streams/new' },
@@ -31,6 +31,24 @@ export default function Header({ darckState, handleThemeChange }) {
         </Link>
       );
     });
+
+  return (
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            <Link href="/">
+              <LinkText href="" color="inherit">
+                Stream.me
+              </LinkText>
+            </Link>
+          </Typography>
+          <Switch checked={darkState} onChange={handleThemeChange} />
+          {links}
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
