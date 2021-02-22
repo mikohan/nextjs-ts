@@ -18,6 +18,7 @@ export default function Header({ darkState, handleThemeChange }) {
   const { user } = useAuth();
 
   const links = [
+    { label: 'Streams', href: '/streams' },
     !user && { label: 'Sign Up', href: '/auth/signup' },
     !user && { label: 'Sign In', href: '/auth/signin' },
     user && { label: 'Create', href: '/streams/new' },
@@ -45,9 +46,6 @@ export default function Header({ darkState, handleThemeChange }) {
                   Stream.me
                 </LinkText>
               </Link>
-            </Typography>
-            <Typography variant="h6">
-              {user ? 'Logged' : 'not logged'}
             </Typography>
           </div>
           <Switch checked={darkState} onChange={handleThemeChange} />
