@@ -63,6 +63,11 @@ export default function CreateStream() {
               required
             />
           </Box>
+          <Box pb={2.5}>
+            <Button type="submit" variant="contained" color="primary">
+              Create Stream
+            </Button>
+          </Box>
         </form>
       </Box>
     </Container>
