@@ -27,7 +27,9 @@ export default function Header({ darkState, handleThemeChange }) {
     .map(({ label, href }) => {
       return (
         <Link href={href} key={href}>
-          <Button color="inherit">{label}</Button>
+          <Button className={classes.menuButton} color="inherit">
+            {label}
+          </Button>
         </Link>
       );
     });

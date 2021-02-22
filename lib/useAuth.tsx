@@ -9,8 +9,8 @@ import { useCurrentUserQuery } from 'lib/graphql/currentUser.graphql';
 type AuthProps = {
   user: any;
   error: string;
-  singIn: (email: any, password: any) => Promise<void>;
-  singUp: (email: any, password: any) => Promise<void>;
+  signIn: (email: any, password: any) => Promise<void>;
+  signUp: (email: any, password: any) => Promise<void>;
   signOut: () => void;
 };
 

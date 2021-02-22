@@ -16,13 +16,13 @@ const MyApp = ({ Component, pageProps }) => {
     setDarkState(!darkState);
   };
 
-  useEffect(() => {
-    // Remove ssr injected css
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles && jssStyles.parentNode) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }, []);
+  //useEffect(() => {
+  //  // Remove ssr injected css
+  //  const jssStyles = document.querySelector('#jss-server-side');
+  //  if (jssStyles && jssStyles.parentNode) {
+  //    jssStyles.parentNode.removeChild(jssStyles);
+  //  }
+  //}, []);
   return (
     <ApolloProvider client={apolloClinet}>
       <ThemeProvider theme={darkState ? themeDark : themeLight}>
