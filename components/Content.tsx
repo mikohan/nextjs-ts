@@ -4,7 +4,21 @@ type VideoProps = {
   url: string;
 };
 
-export default function Video({ url }: VideoProps) {}
+export default function Video({ url }: VideoProps) {
+  const classes = useStyles();
+  return (
+    <div className={classes.container}>
+      <iframe
+        className={classes.iframe}
+        src={url}
+        frameBorder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+      />
+    </div>
+  );
+}
 
 const useStyles = makeStyles(() => ({
   container: {
