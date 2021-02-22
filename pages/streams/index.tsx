@@ -4,7 +4,7 @@ import { Container, Typography, Box } from '@material-ui/core';
 import Posts from 'components/Posts';
 import { useStreamQuery, Stream } from 'lib/graphql/stream.graphql';
 
-export function Streams() {
+export default function Streams() {
   const { data, loading, refetch } = useStreamQuery({ errorPolicy: 'ignore' });
 
   useEffect(() => {
