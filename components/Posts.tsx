@@ -25,7 +25,23 @@ export default function Posts(props: Props) {
       {streams.map((post) => (
         <Grid item key={post._id} xs={12} md={6}>
           <Link href={`/streams/${post._id}`}>
-            <Card></Card>
+            <CardActionArea component="a" href="#">
+              <Card className={styles.card}>
+                <div className={styles.cardDetails}>
+                  <CardContent>
+                    <Typography component="h2" variant="h5">
+                      {post.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {post.url}
+                    </Typography>
+                    <Typography variant="body2" paragraph>
+                      {post.description}
+                    </Typography>
+                  </CardContent>
+                </div>
+              </Card>
+            </CardActionArea>
           </Link>
         </Grid>
       ))}
