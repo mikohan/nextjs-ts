@@ -1,4 +1,4 @@
-import { useState, useContext, createContext, useEffect } from 'react';
+import { useState, useContext, createContext } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { useRouter } from 'next/router';
 
@@ -42,7 +42,7 @@ function useProvideAuth() {
   const [signInMutation] = useSignInMutation();
   const [signUpMutation] = useSignUpMutation();
 
-  const signIn = async (email, password) => {
+  const signIn = async (email: string, password: string) => {
     try {
       const { data } = await signInMutation({ variables: { email, password } });
       if (data.login.token && data.login.user) {
@@ -57,7 +57,7 @@ function useProvideAuth() {
       setError(e.message);
     }
   };
-  const signUp = async (email, password) => {
+  const signUp = async (email: string, password: string) => {
     try {
       const { data } = await signUpMutation({ variables: { email, password } });
       if (data.register.token && data.register.user) {
