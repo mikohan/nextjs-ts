@@ -1,10 +1,9 @@
-import { useState, useContext, createContext } from 'react';
+import { useState, useContext, createContext, useEffect } from 'react';
 import { useApolloClient } from '@apollo/client';
-import { useRouter } from 'next/router';
-
 import { useSignInMutation } from 'lib/graphql/signin.graphql';
 import { useSignUpMutation } from 'lib/graphql/signup.graphql';
 import { useCurrentUserQuery } from 'lib/graphql/currentUser.graphql';
+import { useRouter } from 'next/router';
 
 type AuthProps = {
   user: any;
@@ -13,16 +12,15 @@ type AuthProps = {
   signUp: (email: any, password: any) => Promise<void>;
   signOut: () => void;
 };
-
 const AuthContext = createContext<Partial<AuthProps>>({});
 
-// You can wrap your _app.tsx with this provider
+// You can wrap your _app.js with this provider
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
-// Custom react hook to access the context
+// Custom React hook to access the context
 export const useAuth = () => {
   return useContext(AuthContext);
 };
@@ -37,12 +35,14 @@ function useProvideAuth() {
     errorPolicy: 'ignore',
   });
   const user = data && data.currentUser;
+  console.log(user);
 
-  // Signing in and signing up
+  // Signing In
   const [signInMutation] = useSignInMutation();
+  // Signing Up
   const [signUpMutation] = useSignUpMutation();
 
-  const signIn = async (email: string, password: string) => {
+  const signIn = async (email, password) => {
     try {
       const { data } = await signInMutation({ variables: { email, password } });
       if (data.login.token && data.login.user) {
@@ -53,11 +53,12 @@ function useProvideAuth() {
       } else {
         setError('Invalid Login');
       }
-    } catch (e) {
-      setError(e.message);
+    } catch (err) {
+      setError(err.message);
     }
   };
-  const signUp = async (email: string, password: string) => {
+
+  const signUp = async (email, password) => {
     try {
       const { data } = await signUpMutation({ variables: { email, password } });
       if (data.register.token && data.register.user) {
@@ -68,8 +69,8 @@ function useProvideAuth() {
       } else {
         setError('Invalid Login');
       }
-    } catch (e) {
-      setError(e.message);
+    } catch (err) {
+      setError(err.message);
     }
   };
 
@@ -79,6 +80,7 @@ function useProvideAuth() {
       router.push('/');
     });
   };
+
   return {
     user,
     error,

@@ -5,47 +5,46 @@ import {
   NormalizedCacheObject,
   HttpLink,
 } from '@apollo/client';
-
 import { setContext } from '@apollo/client/link/context';
-import { API_URL } from 'config';
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | undefined;
 
 function createApolloClient() {
-  // create an authentication link
   const authLink = setContext((_, { headers }) => {
-    // get the auth token from localstorage if exists
+    // get the authentication token from local storage if it exists
     const token = localStorage.getItem('token');
     // return the headers to the context so httpLink can read them
     return {
       headers: {
         ...headers,
-        authentication: token ? `Bearer ${token}` : '',
+        authorization: token ? `Bearer ${token}` : '',
       },
     };
   });
   const httpLink = new HttpLink({
-    uri: API_URL,
+    uri: 'http://localhost:8888/graphql',
     credentials: 'include',
   });
+
   return new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 }
 
-// initialize apollo client with context and initial state
 export function initializeApollo(initialState: any = null) {
   const _apolloClient = apolloClient ?? createApolloClient();
 
+  // If your page has Next.js data fetching methods that use Apollo Client, the initial state
+  // get hydrated here
   if (initialState) {
     _apolloClient.cache.restore(initialState);
   }
-
-  // for SSR or SSG always create a new Apollo Client
+  // For SSG and SSR always create a new Apollo Client
   if (typeof window === 'undefined') return _apolloClient;
-  // create the Apollo client once in the client
+  // Create the Apollo Client once in the client
   if (!apolloClient) apolloClient = _apolloClient;
+
   return _apolloClient;
 }
 
