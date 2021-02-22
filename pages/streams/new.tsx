@@ -33,4 +33,38 @@ export default function CreateStream() {
       console.log(e);
     }
   };
+  return (
+    <Container maxWidth="sm">
+      <Box my={4}>
+        <Typography variant="h4">Create Strim</Typography>
+        <form onSubmit={onSubmit}>
+          <Box pb={2.5}>
+            <TextField
+              autoFocus
+              label="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
+          </Box>
+          <Box pb={2.5}>
+            <TextField
+              label="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </Box>
+          <Box pb={2.5}>
+            <TextField
+              label="URL"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              required
+            />
+          </Box>
+        </form>
+      </Box>
+    </Container>
+  );
 }
