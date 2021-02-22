@@ -1,20 +1,26 @@
-import { Container, Typography, Box, Button } from '@material-ui/core';
-import Link from 'next/link';
+import { useEffect } from 'react';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
-const Index = () => {
+import Posts from 'components/Posts';
+import { useStreamsQuery, Stream } from 'lib/graphql/streams.graphql';
+
+export default function Streams() {
+  const { data, loading, refetch } = useStreamsQuery({ errorPolicy: 'ignore' });
+
+  useEffect(() => {
+    refetch();
+  }, []);
+
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="lg">
       <Box my={4}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
-        <Link href="/about">
-          <Button variant="contained" color="primary">
-            About Page
-          </Button>
-        </Link>
+        <Typography variant="h4">Streams</Typography>
       </Box>
+      {!loading && data && data.streams && (
+        <Posts streams={data.streams as Stream[]} />
+      )}
     </Container>
   );
-};
-export default Index;
+}
