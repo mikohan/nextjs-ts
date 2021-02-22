@@ -1,16 +1,13 @@
-import {
-  Typography,
-  Grid,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Hidden,
-} from '@material-ui/core';
-
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Hidden from '@material-ui/core/Hidden';
 import Link from 'next/link';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { Stream } from 'lib/graphql/stream.graphql';
+import { Stream } from '../lib/graphql/streams.graphql';
 
 interface Props {
   streams: Stream[];
@@ -29,13 +26,26 @@ export default function Posts(props: Props) {
               <Card className={styles.card}>
                 <div className={styles.cardDetails}>
                   <CardContent>
-                    <Typography component="h2" variant="h5">
+                    <Typography
+                      component="h2"
+                      variant="h5"
+                      className={styles.cardText}
+                    >
                       {post.title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography
+                      noWrap={true}
+                      variant="subtitle1"
+                      color="textSecondary"
+                      className={styles.cardText}
+                    >
                       {post.url}
                     </Typography>
-                    <Typography variant="body2" paragraph>
+                    <Typography
+                      variant="subtitle1"
+                      paragraph
+                      className={styles.cardText}
+                    >
                       {post.description}
                     </Typography>
                   </CardContent>
@@ -45,7 +55,7 @@ export default function Posts(props: Props) {
                     className={styles.cardMedia}
                     image="https://source.unsplash.com/random"
                     title="Image title"
-                  ></CardMedia>
+                  />
                 </Hidden>
               </Card>
             </CardActionArea>
@@ -65,6 +75,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   cardDetails: {
     flex: 1,
+  },
+  cardText: {
+    maxWidth: '26rem',
   },
   cardMedia: {
     width: 160,

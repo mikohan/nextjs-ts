@@ -1,22 +1,20 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { initializeApollo } from 'lib/apollo';
 import { useEditStreamMutation } from 'lib/graphql/editStream.graphql';
 import { useDeleteStreamMutation } from 'lib/graphql/deleteStream.graphql';
 import { StreamDocument } from 'lib/graphql/stream.graphql';
-
-import {
-  Container,
-  TextField,
-  Typography,
-  Box,
-  Button,
-} from '@material-ui/core';
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 export default function EditStream({ id }) {
   const router = useRouter();
   const [editStream] = useEditStreamMutation();
   const [deleteStream] = useDeleteStreamMutation();
+
   const [state, setState] = useState({
     _id: '',
     title: '',
@@ -25,7 +23,7 @@ export default function EditStream({ id }) {
   });
 
   const { _id, title, description, url } = state;
-  // fetch stream and inititalize state with properties
+
   const fetchStream = async () => {
     const apollo = initializeApollo();
     const { data } = await apollo.query({
@@ -47,14 +45,15 @@ export default function EditStream({ id }) {
         variables: { input: { id: _id, title, description, url } },
       });
       if (data.editStream._id) {
-        router.push('/stream');
+        router.push('/streams');
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.log(err);
     }
   };
+
   const onDelete = async (event) => {
-    event.preventDefalt();
+    event.preventDefault();
 
     try {
       const { data } = await deleteStream({
@@ -63,15 +62,16 @@ export default function EditStream({ id }) {
       if (data.deleteStream) {
         router.push('/streams');
       }
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.log(err);
     }
   };
+
   return (
     <Container maxWidth="sm">
       <Box my={4}>
         <Typography variant="h4">Edit Stream</Typography>
-        <form>
+        <form onSubmit={onSubmit}>
           <Box pb={2.5} />
           <TextField
             autoFocus
@@ -82,7 +82,6 @@ export default function EditStream({ id }) {
           />
           <Box pb={2.5} />
           <TextField
-            autoFocus
             label="Description"
             value={description}
             onChange={(e) =>
@@ -92,7 +91,6 @@ export default function EditStream({ id }) {
           />
           <Box pb={2.5} />
           <TextField
-            autoFocus
             label="URL"
             value={url}
             onChange={(e) => setState({ ...state, url: e.target.value })}
@@ -103,7 +101,7 @@ export default function EditStream({ id }) {
             Save
           </Button>
           <Box pb={2.5} />
-          <Button onClick={onDelete} variant="contained" color="secondary">
+          <Button onClick={onDelete} variant="contained">
             Delete
           </Button>
         </form>

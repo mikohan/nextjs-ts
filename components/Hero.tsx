@@ -1,9 +1,11 @@
-import { Typography, Button, Box, Grid, Paper } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import Link from 'next/link';
-
-import { Theme, makeStyles } from '@material-ui/core/styles';
-import { Stream } from 'lib/graphql/stream.graphql';
-
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import { Stream } from '../lib/graphql/streams.graphql';
 import { useAuth } from 'lib/useAuth';
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 export default function Hero({ stream }: Props) {
   const styles = useStyles();
   const { user } = useAuth();
+
   const showEdit = user && user._id === stream.author._id;
 
   return (
@@ -29,13 +32,17 @@ export default function Hero({ stream }: Props) {
             >
               {stream.title}
             </Typography>
-            <Typography variant="h5" color="inherit" paragraph></Typography>
+            <Typography variant="h5" color="inherit" paragraph>
+              {stream.description}
+            </Typography>
             <Box pb={1} />
-            <Link href={`/edit/${stream._id}`}>
-              <Button variant="outlined" color="inherit">
-                Edit Stream
-              </Button>
-            </Link>
+            {showEdit && (
+              <Link href={`edit/${stream._id}`}>
+                <Button variant="outlined" color="inherit">
+                  Edit Stream
+                </Button>
+              </Link>
+            )}
           </div>
         </Grid>
       </Grid>
@@ -43,7 +50,7 @@ export default function Hero({ stream }: Props) {
   );
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((theme) => ({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
@@ -66,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backgroundColor: 'rgba(0,0,0,.7)',
   },
   mainFeaturedPostContent: {
     position: 'relative',
