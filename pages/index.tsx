@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+// Added comment for some reason
 
 import Posts from 'components/Posts';
 import { useStreamsQuery, Stream } from 'lib/graphql/streams.graphql';
